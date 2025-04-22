@@ -43,10 +43,10 @@ function App() {
                   jobs.map((job, index) => {
                     return (
                       <ItemTodo
-                          key = {index}
-                          job = {job}
-                          index = {index}
-                          onClick = {removeE}
+                        key = {index}
+                        job = {job}
+                        index = {index}
+                        onClick = {removeE}
 
                       />
                     )
