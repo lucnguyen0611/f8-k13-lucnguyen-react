@@ -1,7 +1,8 @@
 import { useEffect } from "react"
 import { Box, Button, Typography, RadioGroup, FormControlLabel, Radio, Paper } from "@mui/material"
 import {useSelector, useDispatch} from "react-redux";
-import { selectOption, showAnswer, nextQuestion, resetQuiz, QuizState } from "./store/slice/quiz.ts"
+import { selectOption, showAnswer, nextQuestion, resetQuiz } from "./store/slice/quiz.ts"
+import type {QuizState} from "./store/slice/quiz.ts"
 
 export default function() {
     const dispatch = useDispatch()
