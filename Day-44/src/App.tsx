@@ -2,7 +2,7 @@ import { useEffect } from "react"
 import { Box, Button, Typography, RadioGroup, FormControlLabel, Radio, Paper } from "@mui/material"
 import {useSelector, useDispatch} from "react-redux";
 import { selectOption, showAnswer, nextQuestion, resetQuiz } from "./store/slice/quiz.ts"
-import type {QuizState} from "./store/slice/quiz.ts"
+import type { RootState } from "./store"
 
 export default function() {
     const dispatch = useDispatch()
@@ -13,7 +13,7 @@ export default function() {
         score,
         isFinished,
         questions,
-    } = useSelector((state: QuizState) => state.quiz)
+    } = useSelector((state: RootState) => state.quiz)
 
     const currentQuestion = questions[currentQuestionIndex]
 
