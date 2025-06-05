@@ -1,7 +1,7 @@
 import { useEffect } from "react"
 import { Box, Button, Typography, RadioGroup, FormControlLabel, Radio, Paper } from "@mui/material"
 import {useSelector, useDispatch} from "react-redux";
-import { selectOption, showAnswer, nextQuestion, resetQuiz } from "./store/slice/quiz.ts"
+import { selectOption, showAnswer, nextQuestion, resetQuiz, QuizState } from "./store/slice/quiz.ts"
 
 export default function() {
     const dispatch = useDispatch()
@@ -12,7 +12,7 @@ export default function() {
         score,
         isFinished,
         questions,
-    } = useSelector((state) => state.quiz)
+    } = useSelector((state: QuizState) => state.quiz)
 
     const currentQuestion = questions[currentQuestionIndex]
 
@@ -65,7 +65,7 @@ export default function() {
             </Typography>
 
             <RadioGroup value={selectedOption || ""} onChange={(e) => handleSelectOption(e.target.value)}>
-                {currentQuestion.options.map((option, index) => {
+                {currentQuestion.options.map((option: any, index: number) => {
                     const isCorrect = option === currentQuestion.answer
                     const isSelected = option === selectedOption
                     const showResult = showAnswerState
