@@ -15,19 +15,13 @@ import {
     TableHead,
     TableRow,
     TableCell,
-    TableBody,
-    Drawer,
-    ListItemIcon
+    TableBody
 } from '@mui/material';
 import React from 'react';
-import { FHeader } from "../../components";
-
-
+import { FHeader, Sidebar } from "../../components";
 import {
     People as PeopleIcon,
     Assignment as AssignmentIcon,
-    Dashboard as DashboardIcon,
-    Person as PersonIcon,
     ContentCopy as CopyIcon
 } from '@mui/icons-material';
 
@@ -50,117 +44,138 @@ export default function ClassOverview() {
         <>
             <FHeader />
             <Box display="flex">
-                {/* Sidebar */}
-                <Drawer
-                    variant="permanent"
-                    sx={{
-                        width: 220,
-                        flexShrink: 0,
-                        [`& .MuiDrawer-paper`]: { width: 220, boxSizing: 'border-box' },
-                    }}
-                >
-                    <Box p={2}>
-                        {/*<Typography fontWeight="bold" mb={2}>BKStar</Typography>*/}
-                        <List>
-                            <ListItem button>
-                                <ListItemIcon><DashboardIcon /></ListItemIcon>
-                                <ListItemText primary="Tổng quan" />
-                            </ListItem>
-                            <ListItem button>
-                                <ListItemIcon><AssignmentIcon /></ListItemIcon>
-                                <ListItemText primary="Bài thi" />
-                            </ListItem>
-                            <ListItem button>
-                                <ListItemIcon><PersonIcon /></ListItemIcon>
-                                <ListItemText primary="Thành viên" />
-                            </ListItem>
-                        </List>
-                    </Box>
-                    <Box position="absolute" bottom={20} px={2}>
-                        <Typography variant="caption">©2024 BKStar</Typography><br />
-                        <Typography variant="caption">Version 1.3.1</Typography>
-                    </Box>
-                </Drawer>
+                <Sidebar />
 
-                {/* Main content */}
                 <Box flex={1} p={3}>
-                    <Grid container spacing={2}>
-                        <Grid item xs={12}>
-                            <Paper sx={{ p: 2, backgroundColor: "#2196f3", color: "white" }}>
-                                <Typography variant="h6">Test Thi Thu</Typography>
+                    <Grid container spacing={3}>
+                        {/* Header lớp học */}
+                        <Grid size={{xs: 12}}>
+                            <Paper
+                                elevation={3}
+                                sx={{
+                                    p: 3,
+                                    background: "linear-gradient(to right, #00c6ff, #0072ff)",
+                                    color: "white",
+                                    borderRadius: 3,
+                                    position: "relative",
+                                    overflow: "hidden",
+                                }}
+                            >
+                                <Typography variant="h6" fontWeight="bold">A2</Typography>
                                 <Typography>Giáo viên: Trần Xuân Bằng</Typography>
-                                <Button
-                                    variant="outlined"
-                                    color="inherit"
-                                    startIcon={<CopyIcon />}
-                                    sx={{ mt: 1 }}
-                                >
-                                    SAO CHÉP LIÊN KẾT
-                                </Button>
+                                <Box mt={2} display="flex" alignItems="center" justifyContent="space-between">
+                                    <Box display="flex" alignItems="center" gap={1}>
+                                        <Typography fontSize={14}>Chia sẻ lớp học</Typography>
+                                        <Button
+                                            variant="outlined"
+                                            color="inherit"
+                                            size="small"
+                                            startIcon={<CopyIcon />}
+                                            sx={{
+                                                borderColor: "white",
+                                                color: "white",
+                                                '&:hover': {
+                                                    backgroundColor: 'rgba(255,255,255,0.1)'
+                                                }
+                                            }}
+                                        >
+                                            Sao chép liên kết
+                                        </Button>
+                                    </Box>
+                                    <Avatar>TB</Avatar>
+                                </Box>
                             </Paper>
                         </Grid>
 
-                        <Grid item xs={6}>
-                            <Paper sx={{ p: 2, textAlign: "center" }}>
-                                <PeopleIcon fontSize="large" />
-                                <Typography variant="h6">3 Thành Viên</Typography>
+                        {/* Thống kê */}
+                        <Grid size={{xs: 12, sm: 6}}>
+                            <Paper
+                                sx={{
+                                    p: 3,
+                                    textAlign: "center",
+                                    borderRadius: 2,
+                                    display: "flex",
+                                    flexDirection: "column",
+                                    alignItems: "center",
+                                    gap: 1,
+                                }}
+                            >
+                                <PeopleIcon sx={{ fontSize: 40, color: "#03a9f4" }} />
+                                <Typography variant="h6" fontWeight="bold">1 Thành Viên</Typography>
                             </Paper>
                         </Grid>
 
-                        <Grid item xs={6}>
-                            <Paper sx={{ p: 2, textAlign: "center" }}>
-                                <AssignmentIcon fontSize="large" />
-                                <Typography variant="h6">5 Bài Kiểm Tra</Typography>
+                        <Grid size={{xs: 12, sm: 6}}>
+                            <Paper
+                                sx={{
+                                    p: 3,
+                                    textAlign: "center",
+                                    borderRadius: 2,
+                                    display: "flex",
+                                    flexDirection: "column",
+                                    alignItems: "center",
+                                    gap: 1,
+                                }}
+                            >
+                                <AssignmentIcon sx={{ fontSize: 40, color: "#03a9f4" }} />
+                                <Typography variant="h6" fontWeight="bold">0 Bài Kiểm Tra</Typography>
                             </Paper>
                         </Grid>
 
-                        {/* Member list */}
-                        <Grid item xs={12}>
-                            <Typography variant="h6" gutterBottom>
-                                Danh sách thành viên
-                            </Typography>
-                            <Table>
-                                <TableHead>
-                                    <TableRow>
-                                        <TableCell>NO.</TableCell>
-                                        <TableCell>HỌ TÊN</TableCell>
-                                        <TableCell>VỊ TRÍ</TableCell>
-                                    </TableRow>
-                                </TableHead>
-                                <TableBody>
-                                    {members.map((m, index) => (
-                                        <TableRow key={m.id}>
-                                            <TableCell>{index + 1}</TableCell>
-                                            <TableCell>{m.name}</TableCell>
-                                            <TableCell>
-                                                <Chip
-                                                    label={m.role}
-                                                    color={m.role === "Giáo viên" ? "error" : "success"}
-                                                    size="small"
-                                                />
-                                            </TableCell>
+                        {/* Danh sách thành viên */}
+                        <Grid  size={{xs: 12}}>
+                            <Paper sx={{ p: 3, borderRadius: 2 }}>
+                                <Typography variant="h6" color="#1976d2" fontWeight="bold" gutterBottom>
+                                    Danh sách thành viên
+                                </Typography>
+                                <Table>
+                                    <TableHead>
+                                        <TableRow sx={{ backgroundColor: "#f0f4f8" }}>
+                                            <TableCell><strong>NO.</strong></TableCell>
+                                            <TableCell><strong>HỌ TÊN</strong></TableCell>
+                                            <TableCell><strong>VỊ TRÍ</strong></TableCell>
                                         </TableRow>
-                                    ))}
-                                </TableBody>
-                            </Table>
+                                    </TableHead>
+                                    <TableBody>
+                                        {members.map((m, index) => (
+                                            <TableRow key={m.id} sx={{ bgcolor: "#f7fbff" }}>
+                                                <TableCell>{index + 1}</TableCell>
+                                                <TableCell>{m.name}</TableCell>
+                                                <TableCell>
+                                                    <Chip
+                                                        label={m.role}
+                                                        size="small"
+                                                        sx={{
+                                                            bgcolor: m.role === "Giáo viên" ? "#ffcdd2" : "#c8e6c9",
+                                                            color: "#000",
+                                                            fontWeight: "bold",
+                                                            mr: 1,
+                                                        }}
+                                                    />
+                                                    {m.role === "Giáo viên" && <span style={{ fontSize: 16 }}>🔑</span>}
+                                                </TableCell>
+                                            </TableRow>
+                                        ))}
+                                    </TableBody>
+                                </Table>
+                            </Paper>
                         </Grid>
                     </Grid>
                 </Box>
 
-                {/* Right sidebar - Activity log */}
-                <Box width={300} p={2} bgcolor="#fafafa">
-                    <Typography variant="h6" gutterBottom>Hoạt động gần đây</Typography>
+                {/* Sidebar bên phải */}
+                <Box width={300} p={3} bgcolor="#fafafa" borderLeft="1px solid #e0e0e0">
+                    <Typography variant="h6" gutterBottom fontWeight="bold">
+                        Hoạt động gần đây
+                    </Typography>
                     <List>
                         {activities.map((a, i) => (
                             <React.Fragment key={i}>
                                 <ListItem alignItems="flex-start">
                                     <ListItemAvatar>
-                                        <Avatar>{a.avatar}</Avatar>
+                                        <Avatar sx={{ bgcolor: "#2196f3" }}>{a.avatar}</Avatar>
                                     </ListItemAvatar>
-                                    <ListItemText
-                                        primary={a.title}
-                                        secondary={a.time}
-                                    />
+                                    <ListItemText primary={a.title} secondary={a.time} />
                                 </ListItem>
                                 {i < activities.length - 1 && <Divider />}
                             </React.Fragment>

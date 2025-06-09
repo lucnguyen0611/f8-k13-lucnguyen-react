@@ -1,0 +1,44 @@
+{
+  "classrooms": [
+    {
+      "id": 1,
+      "name": "Lớp Toán Nâng Cao",
+      "code": "MATH2024",
+      "members": [
+        { "name": "Nguyễn Văn An", "role": "Giáo viên" },
+        { "name": "Trần Thị Bình", "role": "Học sinh" },
+        { "name": "Lê Minh Tuấn", "role": "Học sinh" }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Lớp Văn Học Hiện Đại",
+      "code": "LIT123",
+      "members": [
+        { "name": "Phạm Văn Cường", "role": "Giáo viên" },
+        { "name": "Ngô Thanh Hà", "role": "Học sinh" },
+        { "name": "Đỗ Nhật Linh", "role": "Học sinh" }
+      ]
+    },
+    {
+      "id": 3,
+      "name": "Lớp Anh Văn Giao Tiếp",
+      "code": "ENG456",
+      "members": [
+        { "name": "Trần Kim Yến", "role": "Giáo viên" },
+        { "name": "Lý Thị Mai", "role": "Học sinh" },
+        { "name": "Nguyễn Văn Huy", "role": "Học sinh" }
+      ]
+    },
+    {
+      "id": 4,
+      "name": "Lớp Tin Học Cơ Bản",
+      "code": "IT789",
+      "members": [
+        { "name": "Hoàng Thanh Nam", "role": "Giáo viên" },
+        { "name": "Bùi Minh Phúc", "role": "Học sinh" },
+        { "name": "Trịnh Hoài An", "role": "Học sinh" }
+      ]
+    }
+  ]
+}

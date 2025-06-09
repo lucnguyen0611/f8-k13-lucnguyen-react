@@ -18,7 +18,7 @@ export default function Header() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
 
-  const handleMenuClick = (event) => {
+  const handleMenuClick = (event: any) => {
     setAnchorEl(event.currentTarget);
   };
   const handleClose = () => {
