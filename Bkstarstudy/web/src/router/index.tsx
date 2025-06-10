@@ -8,7 +8,7 @@ import Member from '../pages/Member'
 
 const router = createBrowserRouter([
   {
-    path: "/home",
+    path: "/",
     element: <Home/>,
   },
   {

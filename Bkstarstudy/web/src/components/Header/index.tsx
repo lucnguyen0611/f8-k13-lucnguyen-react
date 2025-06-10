@@ -16,8 +16,6 @@ import HomeIcon from "@mui/icons-material/Home";
 import AddIcon from "@mui/icons-material/Add";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import MenuIcon from "@mui/icons-material/Menu";
-// import FDrawer from "./FDraw"; // adjust path if needed
-import { FDraw } from "../../components";
 
 
 export default function Header() {
@@ -26,7 +24,6 @@ export default function Header() {
 
   const theme = useTheme();
   const isTablet = useMediaQuery(theme.breakpoints.down("md"));
-  const isDesktop = useMediaQuery(theme.breakpoints.up("md"));
   const open = Boolean(anchorEl);
 
   const handleMenuClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -40,15 +37,8 @@ export default function Header() {
         setDrawerOpen(open);
     };
 
-  // const toggleDrawer = (open: boolean) => () => {
-  //   setDrawerOpen(open);
-  // };
-
-
-
   return (
       <>
-        {/* AppBar */}
           <AppBar
               position="fixed"
               color="inherit"
@@ -152,14 +142,7 @@ export default function Header() {
               )}
             </Box>
           </Toolbar>
-
         </AppBar>
-
-        {/* Drawer */}
-          <FDraw isOpen={isDesktop || drawerOpen} toggleDrawer={toggleDrawer} />
-
-          {/*<FDraw isOpen={isDesktop || drawerOpen} toggleDrawer={toggleDrawer} />*/}
-
       </>
   );
 }
