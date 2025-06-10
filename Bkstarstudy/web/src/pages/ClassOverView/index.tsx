@@ -18,7 +18,7 @@ import {
     TableBody
 } from '@mui/material';
 import React from 'react';
-import { FHeader, Sidebar } from "../../components";
+import { MainLayout } from "../../components";
 import {
     People as PeopleIcon,
     Assignment as AssignmentIcon,
@@ -42,14 +42,10 @@ const activities = [
 export default function ClassOverview() {
     return (
         <>
-            <FHeader />
-            <Box display="flex">
-                <Sidebar />
-
-                <Box flex={1} p={3}>
+            <MainLayout>
+                <Box flex={1} >
                     <Grid container spacing={3}>
-                        {/* Header lớp học */}
-                        <Grid size={{xs: 12}}>
+                        <Grid size={{xs: 12, sm: 12, md: 12, lg: 12, xl: 8}}>
                             <Paper
                                 elevation={3}
                                 sx={{
@@ -85,45 +81,42 @@ export default function ClassOverview() {
                                     <Avatar>TB</Avatar>
                                 </Box>
                             </Paper>
-                        </Grid>
+                            <Grid container spacing={3} sx={{ py: 4 }}>
+                                <Grid size={{xs: 12, sm: 6}}>
+                                    <Paper
+                                        sx={{
+                                            p: 3,
+                                            textAlign: "center",
+                                            borderRadius: 2,
+                                            display: "flex",
+                                            flexDirection: "column",
+                                            alignItems: "center",
+                                            gap: 1,
+                                        }}
+                                    >
+                                        <PeopleIcon sx={{ fontSize: 40, color: "#03a9f4" }} />
+                                        <Typography variant="h6" fontWeight="bold">1 Thành Viên</Typography>
+                                    </Paper>
+                                </Grid>
 
-                        {/* Thống kê */}
-                        <Grid size={{xs: 12, sm: 6}}>
-                            <Paper
-                                sx={{
-                                    p: 3,
-                                    textAlign: "center",
-                                    borderRadius: 2,
-                                    display: "flex",
-                                    flexDirection: "column",
-                                    alignItems: "center",
-                                    gap: 1,
-                                }}
-                            >
-                                <PeopleIcon sx={{ fontSize: 40, color: "#03a9f4" }} />
-                                <Typography variant="h6" fontWeight="bold">1 Thành Viên</Typography>
-                            </Paper>
-                        </Grid>
-
-                        <Grid size={{xs: 12, sm: 6}}>
-                            <Paper
-                                sx={{
-                                    p: 3,
-                                    textAlign: "center",
-                                    borderRadius: 2,
-                                    display: "flex",
-                                    flexDirection: "column",
-                                    alignItems: "center",
-                                    gap: 1,
-                                }}
-                            >
-                                <AssignmentIcon sx={{ fontSize: 40, color: "#03a9f4" }} />
-                                <Typography variant="h6" fontWeight="bold">0 Bài Kiểm Tra</Typography>
-                            </Paper>
-                        </Grid>
-
-                        {/* Danh sách thành viên */}
-                        <Grid  size={{xs: 12}}>
+                                {/* Cột 2 */}
+                                <Grid size={{xs: 12, sm: 6}}>
+                                    <Paper
+                                        sx={{
+                                            p: 3,
+                                            textAlign: "center",
+                                            borderRadius: 2,
+                                            display: "flex",
+                                            flexDirection: "column",
+                                            alignItems: "center",
+                                            gap: 1,
+                                        }}
+                                    >
+                                        <AssignmentIcon sx={{ fontSize: 40, color: "#03a9f4" }} />
+                                        <Typography variant="h6" fontWeight="bold">0 Bài Kiểm Tra</Typography>
+                                    </Paper>
+                                </Grid>
+                            </Grid>
                             <Paper sx={{ p: 3, borderRadius: 2 }}>
                                 <Typography variant="h6" color="#1976d2" fontWeight="bold" gutterBottom>
                                     Danh sách thành viên
@@ -160,29 +153,29 @@ export default function ClassOverview() {
                                 </Table>
                             </Paper>
                         </Grid>
+                        <Grid size={{xs: 0, sm: 0, md: 0, lg: 0, xl: 4}}>
+                            <Box p={3} bgcolor="#fafafa" border="1px solid #e0e0e0" sx={{ borderRadius: 2 }}>
+                                <Typography variant="h6" gutterBottom fontWeight="bold">
+                                    Hoạt động gần đây
+                                </Typography>
+                                <List>
+                                    {activities.map((a, i) => (
+                                        <React.Fragment key={i}>
+                                            <ListItem alignItems="flex-start">
+                                                <ListItemAvatar>
+                                                    <Avatar sx={{ bgcolor: "#2196f3" }}>{a.avatar}</Avatar>
+                                                </ListItemAvatar>
+                                                <ListItemText primary={a.title} secondary={a.time} />
+                                            </ListItem>
+                                            {i < activities.length - 1 && <Divider />}
+                                        </React.Fragment>
+                                    ))}
+                                </List>
+                            </Box>
+                        </Grid>
                     </Grid>
                 </Box>
-
-                {/* Sidebar bên phải */}
-                <Box width={300} p={3} bgcolor="#fafafa" borderLeft="1px solid #e0e0e0">
-                    <Typography variant="h6" gutterBottom fontWeight="bold">
-                        Hoạt động gần đây
-                    </Typography>
-                    <List>
-                        {activities.map((a, i) => (
-                            <React.Fragment key={i}>
-                                <ListItem alignItems="flex-start">
-                                    <ListItemAvatar>
-                                        <Avatar sx={{ bgcolor: "#2196f3" }}>{a.avatar}</Avatar>
-                                    </ListItemAvatar>
-                                    <ListItemText primary={a.title} secondary={a.time} />
-                                </ListItem>
-                                {i < activities.length - 1 && <Divider />}
-                            </React.Fragment>
-                        ))}
-                    </List>
-                </Box>
-            </Box>
+            </MainLayout>
         </>
     );
 }

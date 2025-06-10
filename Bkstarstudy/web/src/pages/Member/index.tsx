@@ -10,7 +10,7 @@ import {
     TableContainer
 } from "@mui/material";
 
-import { FHeader, Sidebar } from "../../components";
+import { MainLayout } from "../../components";
 
 const members = [
     { name: "Trần Xuân Bằng", role: "Giáo viên" },
@@ -21,17 +21,15 @@ const members = [
 export default function ClassOverview() {
     return (
         <>
-            <FHeader />
-            <Box display="flex">
-                <Sidebar />
-                <Box p={4} bgcolor="#f8f9fc" minHeight="100vh" width="100%">
-                    <Typography variant="h6" fontWeight="bold" mb={2}>
+            <MainLayout>
+                <Box bgcolor="#f8f9fc" minHeight="100vh" width="100%">
+                    <Typography variant="h5" fontWeight="bold" mb={2}>
                         Danh sách thành viên
                     </Typography>
 
                     <TableContainer
                         component={Paper}
-                        sx={{ borderRadius: 2, overflow: "hidden", maxWidth: 1000 }}
+                        sx={{ borderRadius: 2, overflow: "hidden", maxWidth: '100%' }}
                     >
                         <Table>
                             <TableHead>
@@ -56,7 +54,7 @@ export default function ClassOverview() {
                         </Table>
                     </TableContainer>
                 </Box>
-            </Box>
+            </MainLayout>
         </>
     );
 }

@@ -6,7 +6,7 @@ import {
     Button,
     TextField
 } from '@mui/material';
-import { FHeader, Sidebar } from "../../components";
+import { MainLayout } from "../../components";
 import AssignmentIcon from "@mui/icons-material/Assignment";
 
 const exams = [
@@ -20,68 +20,66 @@ const exams = [
 export default function ClassOverview() {
     return (
         <>
-            <FHeader />
-            <Box display="flex">
-                <Sidebar />
-                <Box p={4} bgcolor="#f8f9fc" minHeight="100vh">
-                    {/* Header */}
-                    <Box display="flex" justifyContent="space-between" alignItems="center" mb={3}>
-                        <Typography variant="h5" fontWeight="bold">
-                            Danh sách Bài thi
-                        </Typography>
+           <MainLayout>
+               <Box  minHeight="100vh">
+                   {/* Header */}
+                   <Box display="flex" justifyContent="space-between" alignItems="center" mb={3}>
+                       <Typography variant="h5" fontWeight="bold">
+                           Danh sách Bài thi
+                       </Typography>
 
-                        <Box display="flex" gap={2}>
-                            <TextField
-                                size="small"
-                                placeholder="Tìm kiếm"
-                                variant="outlined"
-                                sx={{ bgcolor: "white" }}
-                            />
-                            <Button variant="contained" color="primary">
-                                + Tạo bài thi
-                            </Button>
-                        </Box>
-                    </Box>
+                       <Box display="flex" gap={2}>
+                           <TextField
+                               size="small"
+                               placeholder="Tìm kiếm"
+                               variant="outlined"
+                               sx={{ bgcolor: "white" }}
+                           />
+                           <Button variant="contained" color="primary">
+                               + Tạo bài thi
+                           </Button>
+                       </Box>
+                   </Box>
 
-                    {/* Đang diễn ra */}
-                    <Typography variant="subtitle1" fontWeight="bold" mb={2}>
-                        Bài thi đang diễn ra
-                    </Typography>
+                   {/* Đang diễn ra */}
+                   <Typography variant="subtitle1" fontWeight="bold" mb={2}>
+                       Bài thi đang diễn ra
+                   </Typography>
 
-                    <Grid container spacing={2} mb={4}>
-                        {exams.map((exam, index) => (
-                            <Grid key={index} size={{xs: 12,sm: 6, md: 4, lg: 3}}>
-                                <Paper
-                                    elevation={1}
-                                    sx={{
-                                        p: 2,
-                                        borderLeft: "4px solid #03a9f4",
-                                        display: "flex",
-                                        alignItems: "flex-start",
-                                        gap: 2,
-                                        height: "100%",
-                                        borderRadius: 2
-                                    }}
-                                >
-                                    <AssignmentIcon fontSize="large" color="info" />
-                                    <Box>
-                                        <Typography fontWeight="bold">{exam.title}</Typography>
-                                        <Typography fontSize={14} color="text.secondary">
-                                            Ngày bắt đầu: {exam.date}
-                                        </Typography>
-                                    </Box>
-                                </Paper>
-                            </Grid>
-                        ))}
-                    </Grid>
+                   <Grid container spacing={2} mb={4}>
+                       {exams.map((exam, index) => (
+                           <Grid key={index} size={{xs: 12,sm: 6, md: 4, lg: 3}}>
+                               <Paper
+                                   elevation={1}
+                                   sx={{
+                                       p: 2,
+                                       borderLeft: "4px solid #03a9f4",
+                                       display: "flex",
+                                       alignItems: "flex-start",
+                                       gap: 2,
+                                       height: "100%",
+                                       borderRadius: 2
+                                   }}
+                               >
+                                   <AssignmentIcon fontSize="large" color="info" />
+                                   <Box>
+                                       <Typography fontWeight="bold">{exam.title}</Typography>
+                                       <Typography fontSize={14} color="text.secondary">
+                                           Ngày bắt đầu: {exam.date}
+                                       </Typography>
+                                   </Box>
+                               </Paper>
+                           </Grid>
+                       ))}
+                   </Grid>
 
-                    {/* Chưa bắt đầu */}
-                    <Typography variant="subtitle1" fontWeight="bold">
-                        Bài thi chưa bắt đầu
-                    </Typography>
-                    {/* Có thể thêm danh sách bài chưa bắt đầu ở đây nếu có */}
-                </Box>
-            </Box>
+                   {/* Chưa bắt đầu */}
+                   <Typography variant="subtitle1" fontWeight="bold">
+                       Bài thi chưa bắt đầu
+                   </Typography>
+                   {/* Có thể thêm danh sách bài chưa bắt đầu ở đây nếu có */}
+               </Box>
+           </MainLayout>
         </>
     );
 }

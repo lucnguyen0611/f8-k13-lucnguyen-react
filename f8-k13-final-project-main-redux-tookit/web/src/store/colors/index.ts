@@ -1,16 +1,16 @@
 import {createAsyncThunk, createSlice} from '@reduxjs/toolkit'
 import {getMethod, postMethod, putMethod, deleteMethod} from "../../utils";
 
-
-export const getColor = createAsyncThunk('colors/getColors', async () => {
+// payload trong action chính là giá trị mà bạn return từ async function trong createAsyncThunk
+export const getColors = createAsyncThunk('colors/getColors', async () => {
     return await getMethod('/colors/')
 })
 
-export const createColor = createAsyncThunk('colors/createColors', async (color) => {
+export const createColor = createAsyncThunk('colors/createColor', async (color) => {
     return await postMethod('/colors/', color)
 })
 
-export const updateColor = createAsyncThunk('color/editColor', async ({colorId, editedColor}:{colorId : number, editedColor: any})=>{
+export const updateColor = createAsyncThunk('color/updateColor', async ({colorId, editedColor}:{colorId : number, editedColor: any})=>{
     return await putMethod(`/colors/${colorId}`, editedColor)
 })
 
@@ -27,12 +27,14 @@ const colorsSlice = createSlice({
     reducers: {},
     extraReducers: builder => {
         builder
-            .addCase(getColor.pending, state => {
+            // state là initialState
+            .addCase(getColors.pending, state => {
                 state.isLoading = true
             })
-            .addCase(getColor.fulfilled, (state, action) => {
+            .addCase(getColors.fulfilled, (state, action) => {
                 state.isLoading = false
                 state.data = action.payload
+                console.log(action, action.payload)
             })
 
             .addCase(createColor.fulfilled, (state, action) => {
@@ -48,12 +50,14 @@ const colorsSlice = createSlice({
                     // @ts-ignore
                     state.data[index] = action.payload
                 }
+                console.log(action, action.payload)
             })
 
             .addCase(deleteColor.fulfilled, (state, action) => {
                 state.isLoading = false
                 const id = action.payload.id
                 state.data = state.data.filter((c)=> c.id !== id)
+                console.log(action, action.payload)
             })
 
     }

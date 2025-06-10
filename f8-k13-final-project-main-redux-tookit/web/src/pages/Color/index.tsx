@@ -1,5 +1,5 @@
 import {
-  getColor,
+  getColors,
   createColor,
   updateColor,
   deleteColor
@@ -19,13 +19,14 @@ const headers: Header[] = [
 
 export default function ColorPage() {
   const dispatch = useDispatch<AppDispatch>()
+  // Mang color trong state
   const colors = useSelector((state: RootState) => state.colors.data) // ✅ Đúng key: 'colors'
 
   const [isOpenDialog, setIsOpenDialog] = useState(false)
   const [curColor, setCurColor] = useState<Color>({ id: 0, name: '' })
 
   useEffect(() => {
-    dispatch(getColor())
+    dispatch(getColors())
   }, [dispatch])
 
   const onAdd = () => {
@@ -57,6 +58,7 @@ export default function ColorPage() {
         editedColor: { name: curColor.name }
       }))
     } else {
+      // @ts-ignore
       dispatch(createColor({ name: curColor.name }))
     }
   }
