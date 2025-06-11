@@ -17,19 +17,16 @@ import {
     TableCell,
     TableBody
 } from '@mui/material';
-import React from 'react';
 import { MainLayout } from "../../components";
+import React from 'react';
 import {
     People as PeopleIcon,
     Assignment as AssignmentIcon,
     ContentCopy as CopyIcon
 } from '@mui/icons-material';
-
-const members = [
-    { id: 1, name: "Trần Xuân Bằng", role: "Giáo viên" },
-    { id: 2, name: "Phạm Thùy Dương", role: "Học sinh" },
-    { id: 3, name: "bang", role: "Học sinh" },
-];
+import type {Member, Classroom} from '../../utils'
+import { useLocation, useParams } from 'react-router-dom';
+import { useState } from 'react';
 
 const activities = [
     { title: "Bài thi Thu Thi 5", time: "22-04-2024 06:24:49", avatar: "B" },
@@ -40,6 +37,13 @@ const activities = [
 ];
 
 export default function ClassOverview() {
+    const location = useLocation();
+    const { id } = useParams();
+    const [classroom, setClassroom] = useState<Classroom>(location.state);
+
+    const teacher = classroom?.members?.find((member: Member) => member.role === "Giáo viên");
+    const teacherName = teacher ? teacher.name : "Chưa có giáo viên";
+
     return (
         <>
             <MainLayout>
@@ -57,8 +61,8 @@ export default function ClassOverview() {
                                     overflow: "hidden",
                                 }}
                             >
-                                <Typography variant="h6" fontWeight="bold">A2</Typography>
-                                <Typography>Giáo viên: Trần Xuân Bằng</Typography>
+                                <Typography variant="h6" fontWeight="bold">{classroom.name}</Typography>
+                                <Typography>Giáo viên: {teacherName}</Typography>
                                 <Box mt={2} display="flex" alignItems="center" justifyContent="space-between">
                                     <Box display="flex" alignItems="center" gap={1}>
                                         <Typography fontSize={14}>Chia sẻ lớp học</Typography>
@@ -95,7 +99,7 @@ export default function ClassOverview() {
                                         }}
                                     >
                                         <PeopleIcon sx={{ fontSize: 40, color: "#03a9f4" }} />
-                                        <Typography variant="h6" fontWeight="bold">1 Thành Viên</Typography>
+                                        <Typography variant="h6" fontWeight="bold">{classroom.members.length} Thành Viên</Typography>
                                     </Paper>
                                 </Grid>
 
@@ -130,9 +134,9 @@ export default function ClassOverview() {
                                         </TableRow>
                                     </TableHead>
                                     <TableBody>
-                                        {members.map((m, index) => (
-                                            <TableRow key={m.id} sx={{ bgcolor: "#f7fbff" }}>
-                                                <TableCell>{index + 1}</TableCell>
+                                        {classroom.members.map((m, index: number) => (
+                                            <TableRow key={index} sx={{ bgcolor: "#f7fbff" }}>
+                                                <TableCell>{m.id}</TableCell>
                                                 <TableCell>{m.name}</TableCell>
                                                 <TableCell>
                                                     <Chip
@@ -153,7 +157,7 @@ export default function ClassOverview() {
                                 </Table>
                             </Paper>
                         </Grid>
-                        <Grid size={{xs: 0, sm: 0, md: 0, lg: 0, xl: 4}}>
+                        <Grid size={{xs: 12, sm: 12, md: 12, lg: 12, xl: 4}}>
                             <Box p={3} bgcolor="#fafafa" border="1px solid #e0e0e0" sx={{ borderRadius: 2 }}>
                                 <Typography variant="h6" gutterBottom fontWeight="bold">
                                     Hoạt động gần đây

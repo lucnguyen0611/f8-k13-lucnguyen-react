@@ -19,7 +19,6 @@ import { useNavigate } from "react-router-dom";
 interface FDrawerProps {
     isOpen: boolean;
     toggleDrawer: (open: boolean)  => void;
-    // isPermanent?: boolean;
 }
 
 export default function FDrawer({ isOpen, toggleDrawer}: FDrawerProps) {

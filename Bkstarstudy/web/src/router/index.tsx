@@ -20,7 +20,7 @@ const router = createBrowserRouter([
     element: <Register/>,
   },
   {
-    path: "/classes",
+    path: "/class/:id",
     element: <ClassOverView/>,
   },
   {

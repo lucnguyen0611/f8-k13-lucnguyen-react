@@ -5,9 +5,9 @@
       "name": "Lớp Toán Nâng Cao",
       "code": "MATH2024",
       "members": [
-        { "name": "Nguyễn Văn An", "role": "Giáo viên" },
-        { "name": "Trần Thị Bình", "role": "Học sinh" },
-        { "name": "Lê Minh Tuấn", "role": "Học sinh" }
+        { "id": 1, "name": "Nguyễn Văn An", "role": "Giáo viên" },
+        { "id": 2, "name": "Trần Thị Bình", "role": "Học sinh" },
+        { "id": 3, "name": "Lê Minh Tuấn", "role": "Học sinh" }
       ]
     },
     {
@@ -15,9 +15,9 @@
       "name": "Lớp Văn Học Hiện Đại",
       "code": "LIT123",
       "members": [
-        { "name": "Phạm Văn Cường", "role": "Giáo viên" },
-        { "name": "Ngô Thanh Hà", "role": "Học sinh" },
-        { "name": "Đỗ Nhật Linh", "role": "Học sinh" }
+        { "id": 1, "name": "Phạm Văn Cường", "role": "Giáo viên" },
+        { "id": 2, "name": "Ngô Thanh Hà", "role": "Học sinh" },
+        { "id": 3, "name": "Đỗ Nhật Linh", "role": "Học sinh" }
       ]
     },
     {
@@ -25,9 +25,9 @@
       "name": "Lớp Anh Văn Giao Tiếp",
       "code": "ENG456",
       "members": [
-        { "name": "Trần Kim Yến", "role": "Giáo viên" },
-        { "name": "Lý Thị Mai", "role": "Học sinh" },
-        { "name": "Nguyễn Văn Huy", "role": "Học sinh" }
+        { "id": 1, "name": "Trần Kim Yến", "role": "Giáo viên" },
+        { "id": 2, "name": "Lý Thị Mai", "role": "Học sinh" },
+        { "id": 3, "name": "Nguyễn Văn Huy", "role": "Học sinh" }
       ]
     },
     {
@@ -35,9 +35,9 @@
       "name": "Lớp Tin Học Cơ Bản",
       "code": "IT789",
       "members": [
-        { "name": "Hoàng Thanh Nam", "role": "Giáo viên" },
-        { "name": "Bùi Minh Phúc", "role": "Học sinh" },
-        { "name": "Trịnh Hoài An", "role": "Học sinh" }
+        { "id": 1, "name": "Hoàng Thanh Nam", "role": "Giáo viên" },
+        { "id": 2, "name": "Bùi Minh Phúc", "role": "Học sinh" },
+        { "id": 3, "name": "Trịnh Hoài An", "role": "Học sinh" }
       ]
     }
   ]
