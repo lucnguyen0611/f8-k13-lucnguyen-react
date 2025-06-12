@@ -10,6 +10,7 @@ export interface Test {
   id: number;
   name: string;
   date: string;
+  avatar: string
 }
 
 export interface Member {
@@ -23,4 +24,5 @@ export interface Classroom {
   name: string;
   code: string;
   members: Member[];
+  tests: Test[];
 }

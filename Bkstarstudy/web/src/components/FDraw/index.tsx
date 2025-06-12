@@ -17,23 +17,30 @@ import { useTheme } from "@mui/material/styles";
 import { useNavigate } from "react-router-dom";
 
 interface FDrawerProps {
+    hide?: boolean
     isOpen: boolean;
     toggleDrawer: (open: boolean)  => void;
 }
 
-export default function FDrawer({ isOpen, toggleDrawer}: FDrawerProps) {
+export default function FDrawer( {hide, isOpen, toggleDrawer}: FDrawerProps) {
     const navigate = useNavigate();
     const theme = useTheme();
     const isDesktop = useMediaQuery(theme.breakpoints.up("md"));
 
     const goTo = (path: string) => {
-        if (!isDesktop) toggleDrawer(false); // chỉ đóng drawer nếu không phải desktop
+        if (!isDesktop ) toggleDrawer(false); // chỉ đóng drawer nếu không phải desktop
         navigate(path);
     };
 
     return (
         <Drawer
-            variant={isDesktop ? "permanent" : "temporary"}
+            variant={
+                hide === true
+                    ? "temporary"
+                    : isDesktop
+                        ? "permanent"
+                        : "temporary"
+            }
             open={isOpen}
             onClose={() => toggleDrawer(false)}
             sx={{

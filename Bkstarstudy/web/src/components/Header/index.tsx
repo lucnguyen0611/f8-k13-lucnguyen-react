@@ -16,9 +16,13 @@ import HomeIcon from "@mui/icons-material/Home";
 import AddIcon from "@mui/icons-material/Add";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import MenuIcon from "@mui/icons-material/Menu";
+import {FDraw} from '../index.ts'
 
+interface HeaderProps {
+    hide?: boolean;
+}
 
-export default function Header() {
+export default function Header({hide}: HeaderProps) {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [drawerOpen, setDrawerOpen] = React.useState(false);
 
@@ -33,9 +37,10 @@ export default function Header() {
   const handleClose = () => {
     setAnchorEl(null);
   };
-    const toggleDrawer = (open: boolean) => {
-        setDrawerOpen(open);
-    };
+
+  const toggleDrawer = (open: boolean) => {
+      setDrawerOpen(open);
+  };
 
   return (
       <>
@@ -47,7 +52,7 @@ export default function Header() {
                   zIndex: (theme) => isTablet ? theme.zIndex.drawer - 1 : theme.zIndex.drawer + 1,
               }}
           >
-          <Toolbar sx={{ px: 2 }}>
+            <Toolbar sx={{ px: 2 }}>
             {/* Trái: Menu icon */}
             {isTablet ? (
                 <Box sx={{ flex: 1 }}>
@@ -142,7 +147,8 @@ export default function Header() {
               )}
             </Box>
           </Toolbar>
-        </AppBar>
+          </AppBar>
+          <FDraw hide={hide} isOpen={drawerOpen} toggleDrawer={setDrawerOpen}/>
       </>
   );
 }

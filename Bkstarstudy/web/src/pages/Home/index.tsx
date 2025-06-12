@@ -13,9 +13,8 @@ import AddIcon from "@mui/icons-material/Add";
 export default () => {
   return (
     <>
-
-      <FHeader />
-      <Box sx={{ mx: 'auto'}} p={3} bgcolor="#f9f9fb">
+        <FHeader hide={true} />
+        <Box sx={{ mx: 'auto', mt: '64px'}} p={3} bgcolor="#f9f9fb">
           <Box
               display="flex"
               justifyContent="space-between"
@@ -53,7 +52,6 @@ export default () => {
 
           <ClassroomList />
       </Box>
-
     </>
   );
 };

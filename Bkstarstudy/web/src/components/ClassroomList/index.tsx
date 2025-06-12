@@ -5,11 +5,12 @@ import {
     CardContent,
     Typography,
 } from '@mui/material';
+import { Link } from "react-router-dom"
 import { ContentCopy, MeetingRoom } from '@mui/icons-material';
-import Grid from '@mui/material/Grid';
-import {getMethod} from "../../utils/api.ts";
 import {useEffect, useState} from "react";
-import { useNavigate } from 'react-router-dom';
+import {useNavigate} from "react-router-dom";
+import {getMethod} from "../../utils";
+import Grid from "@mui/material/Grid";
 
 interface Classroom {
     id: number;
@@ -49,6 +50,8 @@ const ClassroomCard = ({ classroom, onEnterClass }: ClassroomCardProps) => {
                 <Box sx={{display: "flex", justifyContent: 'space-between', alignItems: 'flex-start'}}>
                     <Typography variant="h6" fontWeight="bold">{classroom.name}</Typography>
                     <Button
+                        component={Link}
+                        to={`/class/${classroom.id}/`}
                         variant="text"
                         startIcon={<MeetingRoom sx={{ color: 'white' }} />}
                         onClick={() => onEnterClass(classroom.id)}
@@ -78,7 +81,6 @@ const ClassroomCard = ({ classroom, onEnterClass }: ClassroomCardProps) => {
         </Card>
     );
 };
-
 export default function ClassroomList() {
     const [classrooms, setClassrooms] = useState<Classroom[]>([]);
     const navigate = useNavigate();
@@ -87,9 +89,10 @@ export default function ClassroomList() {
         try {
             const classroom = await getMethod(`/classrooms/${id}`);
             if (classroom) {
+                // { state: classroom }: Dữ liệu kèm theo chuyến hướng, được truyền qua location.state
                 navigate(`/class/${id}`, { state: classroom });
             }
-            console.log(classroom);
+            console.log(classroom)
         } catch (error) {
             console.error("Không thể lấy thông tin lớp học:", error);
         }
