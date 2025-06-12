@@ -45,7 +45,7 @@ export default () => {
     console.log("curEmployee", curEmployee)
 
     if (curEmployee.id) {
-      const newEmployee: Employee = await putMethod(`/employee/${curEmployee.id}`, toBody())
+      const newEmployee: Employee = await putMethod(`/employees/${curEmployee.id}`, toBody())
       const updateEmployeeIndex = employees.findIndex(
         (e: Employee) => Number(e.id) === Number(curEmployee.id)
       )
@@ -54,7 +54,7 @@ export default () => {
       setEmployees([...employees])
     }
     else {
-      const newEmployee: Employee = await postMethod('/employee', toBody())
+      const newEmployee: Employee = await postMethod('/employees', toBody())
       setEmployees([...employees, newEmployee])
     }
     // update employees variable
@@ -70,7 +70,7 @@ export default () => {
   }
 
   const onMounted = async () => {
-    const employeesData: Employee[] = await getMethod('/employee')
+    const employeesData: Employee[] = await getMethod('/employees')
     setEmployees(employeesData)
   }
 
