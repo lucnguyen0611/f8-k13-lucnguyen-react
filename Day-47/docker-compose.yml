@@ -1,0 +1,11 @@
+services:
+  web:
+    container_name: f8-docker-nextjs
+    image: f8-docker-nextjs
+    volumes:
+      - "./web:/app/web"
+
+    ports:
+      - "7000:7000"
+
+    command: ["npm", "run", "dev", "--", "--port", "7000"]
