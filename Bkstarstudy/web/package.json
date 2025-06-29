@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "start": "concurrently \"vite\" \"json-server db.json\"",
+    "start": "concurrently \"vite\" \"json-server --port 3001 db.json\"",
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",

@@ -32,6 +32,9 @@ interface OverviewProps {
 export default function Overview({ classroom }: OverviewProps) {
     const teacher = classroom?.members?.find((member: Member) => member.role === "Giáo viên");
     const teacherName = teacher ? teacher.name : "Chưa có giáo viên";
+    console.log(teacher)
+    console.log(teacherName)
+
 
     return (
         <>

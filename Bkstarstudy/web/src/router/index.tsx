@@ -3,12 +3,12 @@ import Home from '../pages/Home'
 import Login from '../pages/Login'
 import Register from '../pages/Register'
 import ClassOverView from '../pages/ClassOverView'
-// import Test from '../components/Test'
-// import Member from '../components/Member'
+// import Test from '../components/ClassroomList'
+// import Member from '../components/ClassroomList'
 
 const router = createBrowserRouter([
   {
-    path: "/",
+    path: "/classes",
     element: <Home/>,
   },
   {
@@ -23,14 +23,6 @@ const router = createBrowserRouter([
     path: "/class/:id/*",
     element: <ClassOverView/>,
   },
-  // {
-  //   path: "/test",
-  //   element: <Test/>,
-  // },
-  // {
-  //   path: "/members",
-  //   element: <Member/>,
-  // },
 ]);
 
 export default router

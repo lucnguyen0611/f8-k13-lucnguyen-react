@@ -52,3 +52,5 @@ export default tseslint.config({
   },
 })
 ```
+//    "start": "concurrently \"vite\" \"json-server db.json\"",
+
