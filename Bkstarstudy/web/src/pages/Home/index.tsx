@@ -7,11 +7,13 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 import SearchIcon from "@mui/icons-material/Search";
 import AddIcon from "@mui/icons-material/Add";
 
 export default () => {
-  return (
+    const navigate = useNavigate();
+    return (
     <>
         <FHeader hide={true} />
         <Box sx={{ mx: 'auto', mt: '64px'}} p={3} bgcolor="#f9f9fb">
@@ -44,6 +46,7 @@ export default () => {
                       color="warning"
                       startIcon={<AddIcon />}
                       sx={{ fontWeight: "bold", backgroundColor: "#efc95e" }}
+                      onClick={() => navigate('/class/add')} // <-- chuyển hướng
                   >
                       Thêm lớp học
                   </Button>

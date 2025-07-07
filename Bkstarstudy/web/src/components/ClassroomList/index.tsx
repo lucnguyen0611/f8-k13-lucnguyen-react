@@ -9,8 +9,9 @@ import { Link } from "react-router-dom"
 import { ContentCopy, MeetingRoom } from '@mui/icons-material';
 import {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
-import {getMethod} from "../../utils";
+// import {getMethod} from "../../utils";
 import Grid from "@mui/material/Grid";
+import axiosClient from '../../utils/api/axiosClient.ts';
 
 interface Classroom {
     id: number;
@@ -60,7 +61,7 @@ const ClassroomCard = ({ classroom, onEnterClass }: ClassroomCardProps) => {
                         Vào lớp
                     </Button>
                 </Box>
-                <Typography variant="h4" fontWeight="bold">{classroom.members.length}</Typography>
+                <Typography variant="h4" fontWeight="bold">{classroom.users.length}</Typography>
                 <Box display="flex" justifyContent="space-between" alignItems="center">
                     <Typography>Thành viên tham gia</Typography>
                     <Box sx={{display: "flex", alignItems: 'center', gap: "12px"}}>
@@ -87,24 +88,30 @@ export default function ClassroomList() {
 
     const handleEnterClass = async (id: number) => {
         try {
-            const classroom = await getMethod(`/classrooms/${id}`);
+            const response = await axiosClient.get(`/master/class/${id}`);
+            const classroom = response.data;
+            console.log(classroom)
             if (classroom) {
-                // { state: classroom }: Dữ liệu kèm theo chuyến hướng, được truyền qua location.state
                 navigate(`/class/${id}`, { state: classroom });
             }
-            console.log(classroom)
         } catch (error) {
             console.error("Không thể lấy thông tin lớp học:", error);
         }
     };
 
     const onMounted = async () => {
-        const classesData: Classroom[] = await getMethod('/classrooms');
-        if (Array.isArray(classesData)) {
-            setClassrooms(classesData);
-        } else {
-            console.error("Invalid data format from API:", classesData);
-            setClassrooms([]);
+        try {
+            const response = await axiosClient.get('/master/class');
+            const classesData = response.data;
+            console.log(classesData, response);
+            if (Array.isArray(classesData)) {
+                setClassrooms(classesData);
+            } else {
+                console.error("Invalid data format from API:", classesData);
+                setClassrooms([]);
+            }
+        } catch (error) {
+            console.error("Không thể lấy danh sách lớp học:", error);
         }
     };
 

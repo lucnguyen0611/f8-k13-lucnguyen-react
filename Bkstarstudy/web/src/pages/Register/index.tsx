@@ -1,5 +1,6 @@
-import { useState } from "react"
-import {postMethod} from "../../utils";
+import {useEffect, useState} from "react"
+// import {postMethod, getMethod} from "../../utils";
+import {register} from '../../utils/api/authService.ts'
 import {
     Box,
     Button,
@@ -56,6 +57,9 @@ const Register = () => {
         }
     }
 
+    // getMethod('/master/user')
+    // const a = await getMethod('/classrooms');
+
     const validateForm = (): boolean => {
         const newErrors: Partial<RegisterFormData> = {}
 
@@ -102,7 +106,7 @@ const Register = () => {
         }
 
         try {
-            const data = await postMethod("/master/user", payload)
+            const data = await register
 
             if (data) {
                 setApiResponse({
@@ -137,6 +141,14 @@ const Register = () => {
         }
     }
 
+    // const onMounted = async () => {
+    //     const c = await getMethod("/master/user");
+    //     console.log(c);
+    // };
+    //
+    // useEffect(() => {
+    //     onMounted();
+    // }, []);
 
     return (
         <Container

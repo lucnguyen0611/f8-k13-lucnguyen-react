@@ -17,6 +17,7 @@ import AddIcon from "@mui/icons-material/Add";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import MenuIcon from "@mui/icons-material/Menu";
 import {FDraw} from '../index.ts'
+import {useNavigate} from "react-router-dom";
 
 interface HeaderProps {
     hide?: boolean;
@@ -26,6 +27,7 @@ export default function Header({hide}: HeaderProps) {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [drawerOpen, setDrawerOpen] = React.useState(false);
 
+  const navigate = useNavigate();
   const theme = useTheme();
   const isTablet = useMediaQuery(theme.breakpoints.down("md"));
   const open = Boolean(anchorEl);
@@ -36,6 +38,9 @@ export default function Header({hide}: HeaderProps) {
 
   const handleClose = () => {
     setAnchorEl(null);
+
+    localStorage.clear();
+    navigate("/login"); // Đây chính là phần cần có <RouterProvider>
   };
 
   const toggleDrawer = (open: boolean) => {
