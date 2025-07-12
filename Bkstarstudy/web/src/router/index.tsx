@@ -276,15 +276,15 @@ import Register from '../pages/Register';
 import ClassOverView from '../pages/ClassOverView';
 import ClassAdd from '../pages/ClassAdd';
 // import { ProtectedRoute } from '../components/ProtectedRoute';
-import {ProtectedRoute} from './ProtectedRoute';
+// import {ProtectedRoute} from './ProtectedRoute';
 
 const routers = createBrowserRouter([
   {
     path: "/classes",
     element: (
-        <ProtectedRoute>
+        // <ProtectedRoute>
           <Home />
-        </ProtectedRoute>
+        // </ProtectedRoute>
     ),
   },
   {
@@ -298,17 +298,17 @@ const routers = createBrowserRouter([
   {
     path: "/class/:id/*",
     element: (
-        <ProtectedRoute>
+        // <ProtectedRoute>
           <ClassOverView />
-        </ProtectedRoute>
+        // </ProtectedRoute>
     ),
   },
   {
     path: "/class/add", // chỉnh path sai từ `:add` → `add`
     element: (
-        <ProtectedRoute>
+        // <ProtectedRoute>
           <ClassAdd />
-        </ProtectedRoute>
+        // </ProtectedRoute>
     ),
   },
 ]);

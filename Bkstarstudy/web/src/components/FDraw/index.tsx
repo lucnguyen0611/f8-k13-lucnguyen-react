@@ -16,21 +16,39 @@ interface FDrawerProps {
     toggleDrawer: (open: boolean) => void;
 }
 
+const menuItems = [
+    {
+        label: 'Tổng quan',
+        icon: <DashboardIcon />,
+        subPath: '',
+    },
+    {
+        label: 'Bài thi',
+        icon: <EmojiEventsIcon />,
+        subPath: 'exam',
+    },
+    {
+        label: 'Thành viên',
+        icon: <GroupIcon />,
+        subPath: 'members',
+    }
+];
+
 export default function FDrawer({ hide, isOpen, toggleDrawer }: FDrawerProps) {
     const navigate = useNavigate();
     const theme = useTheme();
     const isDesktop = useMediaQuery(theme.breakpoints.up('md'));
 
-    // Lấy classId từ URL để ghép basePath
-    const { classId } = useParams<{ classId: string }>();
-    const location = useLocation();          // Để giữ lại location.state (classroom)
-    const basePath = `/class/${classId}`;    // -> /class/abc123
-    // const basePath = location.state.id;    // -> /class/abc123
+    const { id: classId } = useParams();
+    const location = useLocation();
+    const basePath = `/class/${classId}`;
+    const currentPath = location.pathname;
 
-    // console.log(classId)
-    // console.log(location.state.id)
+    const isActive = (subPath: string) => {
+        const fullPath = subPath ? `${basePath}/${subPath}` : basePath;
+        return currentPath === fullPath;
+    };
 
-    /** Điều hướng tới path con ('' | 'test' | 'members') */
     const goTo = (subPath = '') => {
         if (!isDesktop) toggleDrawer(false);
         navigate(subPath ? `${basePath}/${subPath}` : basePath, { state: location.state });
@@ -61,20 +79,27 @@ export default function FDrawer({ hide, isOpen, toggleDrawer }: FDrawerProps) {
 
                     {/* ---- MENU ---- */}
                     <List>
-                        <ListItemButton onClick={() => goTo('')}>
-                            <ListItemIcon><DashboardIcon sx={{ color: '#00bfff' }} /></ListItemIcon>
-                            <ListItemText primary="Tổng quan" primaryTypographyProps={{ fontWeight: 'bold', color: '#00bfff' }} />
-                        </ListItemButton>
-
-                        <ListItemButton onClick={() => goTo('test')}>
-                            <ListItemIcon><EmojiEventsIcon /></ListItemIcon>
-                            <ListItemText primary="Bài thi" />
-                        </ListItemButton>
-
-                        <ListItemButton onClick={() => goTo('members')}>
-                            <ListItemIcon><GroupIcon /></ListItemIcon>
-                            <ListItemText primary="Thành viên" />
-                        </ListItemButton>
+                        {menuItems.map(({ label, icon, subPath }) => {
+                            const active = isActive(subPath);
+                            return (
+                                <ListItemButton
+                                    key={subPath}
+                                    selected={active}
+                                    onClick={() => goTo(subPath)}
+                                >
+                                    <ListItemIcon sx={{ color: active ? '#00bfff' : 'inherit' }}>
+                                        {icon}
+                                    </ListItemIcon>
+                                    <ListItemText
+                                        primary={label}
+                                        primaryTypographyProps={{
+                                            fontWeight: active ? 'bold' : 'normal',
+                                            color: active ? '#00bfff' : 'inherit'
+                                        }}
+                                    />
+                                </ListItemButton>
+                            );
+                        })}
                     </List>
                 </Box>
 

@@ -1,5 +1,4 @@
-import {useEffect, useState} from "react"
-// import {postMethod, getMethod} from "../../utils";
+import {useState} from "react"
 import {register} from '../../utils/api/authService.ts'
 import {
     Box,
@@ -140,15 +139,6 @@ const Register = () => {
             setLoading(false)
         }
     }
-
-    // const onMounted = async () => {
-    //     const c = await getMethod("/master/user");
-    //     console.log(c);
-    // };
-    //
-    // useEffect(() => {
-    //     onMounted();
-    // }, []);
 
     return (
         <Container

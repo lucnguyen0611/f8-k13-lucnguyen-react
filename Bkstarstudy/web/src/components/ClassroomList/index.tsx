@@ -9,19 +9,19 @@ import { Link } from "react-router-dom"
 import { ContentCopy, MeetingRoom } from '@mui/icons-material';
 import {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
-// import {getMethod} from "../../utils";
 import Grid from "@mui/material/Grid";
 import axiosClient from '../../utils/api/axiosClient.ts';
+import type {ClassI} from '../../utils'
 
-interface Classroom {
-    id: number;
-    name: string;
-    code: string;
-    members: { name: string; role: string }[];
-}
+// interface Classroom {
+//     id: number;
+//     name: string;
+//     code: string;
+//     members: { name: string; role: string }[];
+// }
 
 interface ClassroomCardProps {
-    classroom: Classroom;
+    classroom: ClassI;
     onEnterClass: (id: number) => void;
 }
 
@@ -83,14 +83,14 @@ const ClassroomCard = ({ classroom, onEnterClass }: ClassroomCardProps) => {
     );
 };
 export default function ClassroomList() {
-    const [classrooms, setClassrooms] = useState<Classroom[]>([]);
+    const [classrooms, setClassrooms] = useState<ClassI[]>([]);
     const navigate = useNavigate();
 
     const handleEnterClass = async (id: number) => {
         try {
             const response = await axiosClient.get(`/master/class/${id}`);
             const classroom = response.data;
-            console.log(classroom)
+            console.log('classroom', classroom)
             if (classroom) {
                 navigate(`/class/${id}`, { state: classroom });
             }
