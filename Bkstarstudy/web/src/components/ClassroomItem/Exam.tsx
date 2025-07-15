@@ -80,11 +80,14 @@ import type { ExamGroupI } from '../../utils';
 import { useEffect, useState } from 'react';
 import axiosClient from '../../utils/api/axiosClient.ts';
 import { Outlet } from "react-router-dom";
-
+import { useNavigate } from "react-router-dom";
 
 const ExamDetail = () => {
     const { id } = useParams();
     const [exam, setExam] = useState<ExamGroupI | null>(null);
+    const navigate = useNavigate();
+    const pa = useParams()
+    console.log('params', pa)
 
     useEffect(() => {
         axiosClient.get(`/exam_group/${id}`)
@@ -97,6 +100,10 @@ const ExamDetail = () => {
     }, [id]); // ✅ sửa lại ở đây
 
     if (!exam) return <Typography>Đang tải...</Typography>;
+
+    const handleAdd = () => {
+        navigate('0')
+    }
 
     return (
         <Box p={2}>
@@ -150,7 +157,7 @@ const ExamDetail = () => {
                     </Typography>
                 </Grid>
                 <Grid >
-                    <Button variant="contained" color="primary">
+                    <Button variant="contained" color="primary" onClick={handleAdd}>
                         + Thêm đề bài
                     </Button>
                 </Grid>

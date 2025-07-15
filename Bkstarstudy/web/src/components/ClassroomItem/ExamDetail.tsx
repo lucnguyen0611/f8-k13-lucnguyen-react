@@ -73,14 +73,17 @@ export default function CreateExamForm() {
         };
 
         if (fileData) {
-            payload.file = fileData;
+            payload.file = imageFile;
         }
+
+        console.log('fileData', fileData, 'imageFile', imageFile)
 
         console.log("Sending payload:", payload);
 
         try {
             const res = await axiosClient.post("/exam", payload);
             alert("Tạo đề thành công!");
+            console.log('res', res)
         } catch (err) {
             alert("Lỗi khi tạo đề!");
             console.error(err);
@@ -126,17 +129,17 @@ export default function CreateExamForm() {
 
             <Paper sx={{ p: 3 }}>
                 <Grid container spacing={2}>
-                    <Grid item xs={12} sm={6}>
+                    <Grid size={{ xs: 12, sm: 6 }}>
                         <TextField label="Tên đề *" fullWidth size="small" value={name} onChange={e => setName(e.target.value)} />
                     </Grid>
-                    <Grid item xs={12} sm={6}>
-                        <TextField label="Mã đề *" fullWidth size="small" value={code} onChange={e => setCode(e.target.value)} />
+                    <Grid size={{ xs: 12, sm: 6 }}>
+                    <TextField label="Mã đề *" fullWidth size="small" value={code} onChange={e => setCode(e.target.value)} />
                     </Grid>
-                    <Grid item xs={12} sm={6}>
-                        <TextField label="Thời gian làm bài (phút)" type="number" fullWidth size="small" value={totalTime} onChange={e => setTotalTime(+e.target.value)} />
+                    <Grid size={{ xs: 12, sm: 6 }}>
+                    <TextField label="Thời gian làm bài (phút)" type="number" fullWidth size="small" value={totalTime} onChange={e => setTotalTime(+e.target.value)} />
                     </Grid>
-                    <Grid item xs={12} sm={6}>
-                        <TextField
+                    <Grid size={{ xs: 12, sm: 6 }}>
+                    <TextField
                             label="Số câu *"
                             type="number"
                             fullWidth
@@ -155,7 +158,7 @@ export default function CreateExamForm() {
                             }}
                         />
                     </Grid>
-                    <Grid item xs={12}>
+                    <Grid size={{ xs: 12}}>
                         <TextField
                             label="Mô tả"
                             fullWidth
@@ -168,7 +171,7 @@ export default function CreateExamForm() {
                     </Grid>
 
                     {Array.from({ length: questionCount }, (_, i) => (
-                        <Grid item xs={12} key={i}>
+                        <Grid size={{ xs: 12}} key={i}>
                             <Typography fontWeight="bold" mt={2}>Câu {i + 1}</Typography>
                             <TextField
                                 select
@@ -240,7 +243,7 @@ export default function CreateExamForm() {
                         </Grid>
                     ))}
 
-                    <Grid item xs={12}>
+                    <Grid size={{ xs: 12}}>
                         <Button variant="contained" color="primary" onClick={handleSubmit} fullWidth>
                             TẠO ĐỀ BÀI
                         </Button>

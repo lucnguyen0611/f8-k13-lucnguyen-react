@@ -1,4 +1,3 @@
-// import api from '../plugins/api.ts'
 import api from '../../plugins/api.ts'
 
 
