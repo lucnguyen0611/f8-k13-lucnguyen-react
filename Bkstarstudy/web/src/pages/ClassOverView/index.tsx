@@ -1,5 +1,4 @@
-import { MainLayout } from '../../components';
-import { Members, Overview, ExamGroup, Exam, ExamDetail } from '../../components/ClassroomItem';
+import { Users, Overview, ExamGroup, Exam, ExamForm, MainLayout } from '../../components/ClassroomItem';
 import { useEffect, useState } from 'react';
 import { Routes, Route, useParams } from 'react-router-dom';
 import axiosClient from '../../utils/api/axiosClient.ts';
@@ -43,35 +42,31 @@ export default function ClassOverview() {
         }
     }, [classId]);
 
-    console.log('examGroup', examGroup);
-    console.log('classroom', classroom)
-
     if (loading) return <MainLayout><div>Đang tải lớp học...</div></MainLayout>;
     if (error) return <MainLayout><div>{error}</div></MainLayout>;
     if (!classroom) return <MainLayout><div>Không có dữ liệu lớp học.</div></MainLayout>;
 
     return (
         <MainLayout>
+            {/*<Routes>*/}
+            {/*    <Route index element={<Overview classroom={classroom} examGroup={examGroup} />} />*/}
+            {/*    <Route path="exam" element={<ExamGroup  examGroup={examGroup} classId={classroom.id}/>} />*/}
+            {/*    <Route path="exam/:id" element={<Exam />} />*/}
+            {/*    <Route path="exam/:id/:id" element={<ExamDetail />} />*/}
+            {/*    <Route path="members" element={<Users users={classroom.users} />} />*/}
+            {/*    <Route path="*" element={<div>Không tìm thấy trang</div>} />*/}
+            {/*</Routes>*/}
             <Routes>
                 <Route index element={<Overview classroom={classroom} examGroup={examGroup} />} />
-                <Route path="exam" element={<ExamGroup  examGroup={examGroup} classId={classroom.id}/>} />
-                {/*<Route path="exam" element={<ExamGroup examGroup={examGroup} classId={classroom.id} />}>*/}
-                {/*    <Route path={":id"} element={<Exam />} />*/}
-                {/*</Route>*/}
-                {/*<Route path="exam/:id" element={<Exam />} >*/}
-                {/*    <Route path=":id" element={<ExamDetail />} />*/}
-                {/*</Route>*/}
-                <Route path="exam/:id" element={<Exam />} >
-                </Route>
-                <Route path="exam/:id/:id" element={<ExamDetail />} />
-                <Route path="members" element={<Members members={classroom.users} />} />
-                {/*<Route path="step-2" element={<StepTwoLayout />}>*/}
-                {/*    <Route index element={<SubStepA />} />*/}
-                {/*    <Route path="sub-b" element={<SubStepB />} />*/}
-                {/*</Route>*/}
+                <Route path="exam" element={<ExamGroup examGroup={examGroup} classId={classroom.id} />} />
+                <Route path="exam/:examId" element={<Exam />} />
+                {/*<Route path="exam/:examId/:examDetailId" element={<ExamDetail />} />*/}
+                <Route path="exam/:examId/0" element={<ExamForm mode="create" />} />
+                <Route path="exam/:examId/:examDetailId" element={<ExamForm mode="edit" />} />
+                <Route path="members" element={<Users users={classroom.users} />} />
                 <Route path="*" element={<div>Không tìm thấy trang</div>} />
             </Routes>
-            {/*<Overview classroom={classroom} examGroup={examGroup} />*/}
+
         </MainLayout>
     );
 }

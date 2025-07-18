@@ -11,6 +11,7 @@ import {
     Alert,
     CircularProgress,
 } from "@mui/material"
+import type {RegisterPayloadI} from '../../utils'
 
 interface RegisterFormData {
     name: string
@@ -56,9 +57,6 @@ const Register = () => {
         }
     }
 
-    // getMethod('/master/user')
-    // const a = await getMethod('/classrooms');
-
     const validateForm = (): boolean => {
         const newErrors: Partial<RegisterFormData> = {}
 
@@ -96,7 +94,7 @@ const Register = () => {
         setLoading(true)
         setApiResponse(null)
 
-        const payload = {
+        const payload: RegisterPayloadI = {
             name: formData.name,
             email: formData.email,
             password: formData.password,
@@ -105,7 +103,7 @@ const Register = () => {
         }
 
         try {
-            const data = await register
+            const data = await register(payload)
 
             if (data) {
                 setApiResponse({

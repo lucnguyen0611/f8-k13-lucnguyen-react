@@ -13,6 +13,3 @@ if (rootElement) {
         </React.StrictMode>
     );
 }
-
-
-export default App;

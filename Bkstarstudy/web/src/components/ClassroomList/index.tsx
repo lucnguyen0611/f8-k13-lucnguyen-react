@@ -13,13 +13,6 @@ import Grid from "@mui/material/Grid";
 import axiosClient from '../../utils/api/axiosClient.ts';
 import type {ClassI} from '../../utils'
 
-// interface Classroom {
-//     id: number;
-//     name: string;
-//     code: string;
-//     members: { name: string; role: string }[];
-// }
-
 interface ClassroomCardProps {
     classroom: ClassI;
     onEnterClass: (id: number) => void;
@@ -103,7 +96,6 @@ export default function ClassroomList() {
         try {
             const response = await axiosClient.get('/master/class');
             const classesData = response.data;
-            console.log(classesData, response);
             if (Array.isArray(classesData)) {
                 setClassrooms(classesData);
             } else {

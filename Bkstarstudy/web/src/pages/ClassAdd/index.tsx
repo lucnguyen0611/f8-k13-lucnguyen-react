@@ -1,5 +1,5 @@
 import { FHeader } from "../../components";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import {
     Box,
     Button,
@@ -8,64 +8,37 @@ import {
     Typography,
 } from "@mui/material";
 import axiosClient from '../../utils/api/axiosClient.ts';
-import Cookies from 'js-cookie';
 import { useNavigate } from "react-router-dom";
+import { StoreContext } from '../../context/StoreProvider';
 
-export default () => {
+export default function ClassAdd() {
     const [name, setName] = useState('');
     const [code, setCode] = useState('');
     const navigate = useNavigate();
 
-    function decodeJWT(token: string) {
-        try {
-            const base64Payload = token.split('.')[1];
-            const payload = atob(base64Payload); // Giải mã base64
-            return JSON.parse(payload); // Chuyển thành object
-        } catch (e) {
-            console.error("Invalid token", e);
-            return null;
-        }
-    }
+    const { userInfo } = useContext(StoreContext);
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+
         if (!name || !code) return alert("Vui lòng nhập đầy đủ thông tin");
-
-        const token = Cookies.get('token'); // <-- Lấy token từ cookie
-
-        if (!token) {
-            alert("Bạn chưa đăng nhập");
-            return;
-        }
-
-        const decoded = decodeJWT(token);
-
-        if (!decoded) {
-            alert("Token không hợp lệ");
-            return;
-        }
+        if (!userInfo?.id) return alert("Bạn chưa đăng nhập hoặc token đã hết hạn");
 
         const payload = {
             name,
             code,
-            users: [decoded.id]
+            users: [userInfo.id], // ✅ Dùng id từ context
         };
-        console.log(payload)
 
         try {
             const response = await axiosClient.post(`/master/class`, payload);
-            console.log("Payload gửi đi:", payload);
             console.log("Tạo lớp thành công:", response.data);
             navigate("/classes");
         } catch (err: any) {
             console.error("Lỗi tạo lớp:", err);
-            if (err.response) {
-                console.error("Chi tiết lỗi:", err.response.data);
-            }
             alert("Tạo lớp thất bại. Vui lòng thử lại.");
         }
     };
-
 
     const handleCancel = () => {
         setName('');
@@ -124,4 +97,4 @@ export default () => {
             </Box>
         </>
     );
-};
+}

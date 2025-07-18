@@ -1,14 +1,13 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import {
-    Box, Button, Grid, Typography, Paper, TextField, Dialog, DialogTitle,
-    DialogContent, DialogActions, IconButton
+    Box, Button, TextField, Typography, Grid, Paper
 } from '@mui/material';
 import AssignmentIcon from "@mui/icons-material/Assignment";
-import CloseIcon from '@mui/icons-material/Close';
+import { useNavigate } from "react-router-dom";
 import axiosClient from '../../utils/api/axiosClient';
-import type { ExamGroupI } from '../../utils';
-import {useNavigate} from "react-router-dom";
 import { Outlet } from "react-router-dom";
+import ExamDialog from "../Dialog/ExamDialog.tsx";
+import type { ExamGroupI } from '../../utils';
 
 interface TestsProps {
     examGroup: ExamGroupI[];
@@ -19,7 +18,6 @@ export default function ExamGroup({ examGroup, classId }: TestsProps) {
     const [tests, setTests] = useState<ExamGroupI[]>(examGroup);
     const [loading, setLoading] = useState(false);
     const [open, setOpen] = useState(false);
-    const [formData, setFormData] = useState({ name: '', awaitTime: '', startDate: '' });
 
     const fetchTests = async () => {
         setLoading(true);
@@ -35,32 +33,6 @@ export default function ExamGroup({ examGroup, classId }: TestsProps) {
 
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
-
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const { name, value } = e.target;
-        setFormData(prev => ({ ...prev, [name]: value }));
-    };
-
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
-        try {
-            const dateOnly = formData.startDate.split("T")[0];
-
-            await axiosClient.post('/exam_group/', {
-                name: formData.name,
-                class_id: classId,
-                start_time: dateOnly,
-                await_time: parseInt(formData.awaitTime),
-                is_once: true,
-                is_save_local: true
-            });
-
-            await fetchTests();
-            handleClose();
-        } catch (err) {
-            console.error("Lỗi khi tạo bài thi:", err);
-        }
-    };
 
     const now = Date.now();
 
@@ -100,52 +72,12 @@ export default function ExamGroup({ examGroup, classId }: TestsProps) {
             <TestSection title="Bài thi đang diễn ra" tests={ongoingTests} color="#03a9f4" />
             <TestSection title="Bài thi chưa bắt đầu" tests={upcomingTests} color="#ff9800" />
 
-            <Dialog open={open} onClose={handleClose} fullWidth maxWidth="sm">
-                <DialogTitle>
-                    Tạo bài thi mới
-                    <IconButton onClick={handleClose} sx={{ position: 'absolute', right: 8, top: 8 }}>
-                        <CloseIcon />
-                    </IconButton>
-                </DialogTitle>
-
-                <DialogContent dividers>
-                    <TextField
-                        fullWidth
-                        margin="normal"
-                        label="Tên bài thi"
-                        name="name"
-                        value={formData.name}
-                        onChange={handleChange}
-                        required
-                    />
-                    <TextField
-                        fullWidth
-                        margin="normal"
-                        label="Thời gian chờ (giây)"
-                        name="awaitTime"
-                        value={formData.awaitTime}
-                        onChange={handleChange}
-                        required
-                        type="number"
-                    />
-                    <TextField
-                        fullWidth
-                        margin="normal"
-                        label="Thời gian bắt đầu"
-                        name="startDate"
-                        type="date"
-                        value={formData.startDate}
-                        onChange={handleChange}
-                        required
-                        InputLabelProps={{ shrink: true }}
-                    />
-                </DialogContent>
-
-                <DialogActions>
-                    <Button onClick={handleClose}>Hủy</Button>
-                    <Button onClick={handleSubmit} variant="contained">Tạo mới</Button>
-                </DialogActions>
-            </Dialog>
+            <ExamDialog
+                open={open}
+                onClose={handleClose}
+                onCreated={fetchTests}
+                classId={classId}
+            />
             <Outlet />
         </Box>
     );
@@ -163,8 +95,9 @@ function TestSection({
     const navigate = useNavigate();
 
     const handleClick = (testId: number) => {
-        navigate(`${testId}`); // điều hướng sang trang chi tiết bài thi
+        navigate(`${testId}`);
     };
+
     return (
         <>
             <Typography variant="subtitle1" fontWeight="bold" mb={2}>
@@ -175,14 +108,16 @@ function TestSection({
                 {tests.length > 0 ? (
                     tests.map((test, index) => (
                         <Grid size={{ xs: 12, sm: 6, md: 4, lg: 3 }} key={index}>
-                            <Paper sx={{
-                                p: 2,
-                                borderLeft: `4px solid ${color}`,
-                                display: "flex",
-                                gap: 2,
-                                borderRadius: 2
-                            }}
-                                   onClick={() => handleClick(test.id)}
+                            <Paper
+                                sx={{
+                                    p: 2,
+                                    borderLeft: `4px solid ${color}`,
+                                    display: "flex",
+                                    gap: 2,
+                                    borderRadius: 2,
+                                    cursor: 'pointer'
+                                }}
+                                onClick={() => handleClick(test.id)}
                             >
                                 <AssignmentIcon fontSize="large" sx={{ color }} />
                                 <Box>

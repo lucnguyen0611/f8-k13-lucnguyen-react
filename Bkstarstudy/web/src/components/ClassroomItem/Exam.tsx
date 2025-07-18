@@ -1,109 +1,61 @@
-// // import { useParams } from 'react-router-dom';
-// import {
-//     Box,
-//     Grid,
-//     Typography,
-//     Paper,
-//     Button,
-//     IconButton,
-//     Avatar
-// } from '@mui/material';
-// import EditIcon from '@mui/icons-material/Edit';
-// import { useParams } from 'react-router-dom';
-// import type { ExamGroupI } from '../../utils';
-// import { useEffect, useState } from 'react';
-// import axiosClient from '../../utils/api/axiosClient.ts';
-//
-// const ExamDetail = () => {
-//
-//     const { id } = useParams();
-//     const [exam, setExam] = useState<ExamGroupI>(null);
-//     console.log('examid', id);
-//
-//     useEffect(() => {
-//         axiosClient.get(`/exam_group/${id}`)
-//             .then((res) => {
-//                 setExam(res.data);
-//             })
-//             .catch((err) => {
-//                 console.error("Không thể lấy thông tin bài thi:", err);
-//             });
-//     }, [id]); // ✅ chỉ gọi lại khi id thay đổi
-//
-//
-//     return (
-//         <Box p={2}>
-//             <Typography variant="h6" mb={2}>Danh sách bài thi {'>'} Chi tiết bài thi</Typography>
-//
-//             <Paper variant="outlined" sx={{ p: 2, border: '1px solid #00bcd4' }}>
-//                 <Typography><strong>Tên bài thi:</strong> {exam.name}</Typography>
-//                 <Typography><strong>Ngày bắt đầu:</strong> {exam.start_time}</Typography>
-//                 <Typography><strong>Thời gian chờ giữa các đề bài:</strong> {exam.await_time} phút</Typography>
-//                 <Box mt={2} display="flex" gap={1}>
-//                     <Button variant="contained" color="success">Chỉnh sửa</Button>
-//                     <Button variant="outlined" color="error">Xóa bỏ</Button>
-//                 </Box>
-//             </Paper>
-//
-//             <Box mt={4}>
-//                 <Typography variant="subtitle1" fontWeight="bold">Danh sách đề bài</Typography>
-//                 <Button variant="contained" sx={{ mt: 2 }}>+ Thêm đề bài</Button>
-//
-//                 {/*{examDetail.examQuestions.map((exam) => (*/}
-//                 {/*    <Paper key={exam.id} sx={{ mt: 1, p: 2, border: '1px dashed #00bcd4' }}>*/}
-//                 {/*        <Box display="flex" justifyContent="space-between">*/}
-//                 {/*            <Typography><strong>Đề bài:</strong> {exam.name}</Typography>*/}
-//                 {/*            <IconButton><EditIcon fontSize="small" /></IconButton>*/}
-//                 {/*        </Box>*/}
-//                 {/*        <Typography>Mã đề: {exam.id}</Typography>*/}
-//                 {/*        <Typography>Thời gian làm bài: {exam.duration} phút</Typography>*/}
-//                 {/*        <Typography>Số câu hỏi: {exam.questionCount}</Typography>*/}
-//                 {/*    </Paper>*/}
-//                 {/*))}*/}
-//             </Box>
-//         </Box>
-//     );
-// };
-//
-// export default ExamDetail;
-//
-
 import {
     Box,
     Typography,
     Paper,
     Button,
-    Grid
+    Grid,
+    Card,
+    CardContent,
+    IconButton
 } from '@mui/material';
-import { useParams } from 'react-router-dom';
-import type { ExamGroupI } from '../../utils';
+import EditIcon from '@mui/icons-material/Edit';
+import { useParams, useNavigate, Outlet } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import axiosClient from '../../utils/api/axiosClient.ts';
-import { Outlet } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import axiosClient from '../../utils/api/axiosClient';
+import type { ExamGroupI } from '../../utils';
+
+interface Exam {
+    id: number;
+    name: string;
+    code: string;
+    exam_group: number;
+    total_time: number;
+    number_of_question: number;
+}
 
 const ExamDetail = () => {
-    const { id } = useParams();
-    const [exam, setExam] = useState<ExamGroupI | null>(null);
+    const { examId } = useParams();
+    const groupId = Number(examId);
+    const [examGroup, setExamGroup] = useState<ExamGroupI | null>(null);
+    const [exams, setExams] = useState<Exam[]>([]);
     const navigate = useNavigate();
-    const pa = useParams()
-    console.log('params', pa)
 
     useEffect(() => {
-        axiosClient.get(`/exam_group/${id}`)
+        axiosClient.get(`/exam_group/${examId}`)
             .then((res) => {
-                setExam(res.data);
+                setExamGroup(res.data);
             })
             .catch((err) => {
                 console.error("Không thể lấy thông tin bài thi:", err);
             });
-    }, [id]); // ✅ sửa lại ở đây
 
-    if (!exam) return <Typography>Đang tải...</Typography>;
+        axiosClient.get('/exam')
+            .then((res) => {
+                const allExams = res.data; // hoặc res.data.data nếu response bọc thêm 1 lớp
+                const filtered = allExams.filter((exam: Exam) => exam.exam_group === groupId);
+                setExams(filtered);
+            })
+            .catch((err) => {
+                console.error("Không thể lấy danh sách đề thi:", err);
+            });
+
+    }, [examId]);
+
+    if (!examGroup) return <Typography>Đang tải...</Typography>;
 
     const handleAdd = () => {
-        navigate('0')
-    }
+        navigate('0');
+    };
 
     return (
         <Box p={2}>
@@ -121,31 +73,27 @@ const ExamDetail = () => {
                 }}
             >
                 <Grid container spacing={2} alignItems="center">
-                    <Grid size={{ xs: 12, md: 8}}>
+                    <Grid size={{ xs: 12, md: 8 }}>
                         <Typography mb={1}>
-                            <strong>Tên bài thi:</strong> {exam.name}
+                            <strong>Tên bài thi:</strong> {examGroup.name}
                         </Typography>
                         <Typography mb={1}>
-                            <strong>Ngày bắt đầu:</strong> {exam.start_time}
+                            <strong>Ngày bắt đầu:</strong> {examGroup.start_time}
                         </Typography>
                         <Typography>
-                            <strong>Thời gian chờ giữa các đề bài:</strong> {exam.await_time} phút
+                            <strong>Thời gian chờ giữa các đề bài:</strong> {examGroup.await_time} phút
                         </Typography>
                     </Grid>
 
                     <Grid
-                        size={{ xs: 12, md: 4}}
+                        size={{ xs: 12, md: 4 }}
                         display="flex"
                         justifyContent={{ xs: 'flex-start', md: 'flex-end' }}
                         gap={1}
                         mt={{ xs: 2, md: 0 }}
                     >
-                        <Button variant="contained" color="success">
-                            Chỉnh sửa
-                        </Button>
-                        <Button variant="outlined" color="error">
-                            Xóa bỏ
-                        </Button>
+                        <Button variant="contained" color="success">Chỉnh sửa</Button>
+                        <Button variant="outlined" color="error">Xóa bỏ</Button>
                     </Grid>
                 </Grid>
             </Paper>
@@ -156,26 +104,50 @@ const ExamDetail = () => {
                         Danh sách đề bài
                     </Typography>
                 </Grid>
-                <Grid >
+                <Grid>
                     <Button variant="contained" color="primary" onClick={handleAdd}>
                         + Thêm đề bài
                     </Button>
                 </Grid>
             </Grid>
 
-            {/* TODO: Hiển thị danh sách đề bài tại đây */}
-            {/* <Grid container spacing={2}>
-                {examQuestions.map(q => (
-                    <Grid item xs={12} sm={6} md={4} lg={3} key={q.id}>
-                        <Paper sx={{ p: 2, border: '1px dashed #00bcd4' }}>
-                            ...
-                        </Paper>
+            <Grid container spacing={2}>
+                {exams.map((exam) => (
+                    <Grid key={exam.id} size={{ xs: 12, sm: 6, md: 4, lg: 3 }}>
+                        <Card
+                            variant="outlined"
+                            sx={{
+                                borderStyle: 'dashed',
+                                height: '100%',
+                                position: 'relative'
+                            }}
+                        >
+                            <CardContent>
+                                <Box display="flex" justifyContent="space-between" alignItems="start">
+                                    <Typography fontWeight="bold">
+                                        Đề bài: {exam.name}
+                                    </Typography>
+                                    <IconButton size="small" onClick={() => navigate(`${exam.id}`)}>
+                                        <EditIcon fontSize="small" />
+                                    </IconButton>
+                                </Box>
+                                <Typography variant="body2" mt={1}>
+                                    Mã đề: {exam.code}
+                                </Typography>
+                                <Typography variant="body2">
+                                    Thời gian làm bài: {Math.floor(exam.total_time / 60)} phút
+                                </Typography>
+                                <Typography variant="body2">
+                                    Số câu hỏi: {exam.number_of_question}
+                                </Typography>
+                            </CardContent>
+                        </Card>
                     </Grid>
                 ))}
-            </Grid> */}
-            <Outlet/>
-        </Box>
+            </Grid>
 
+            <Outlet />
+        </Box>
     );
 };
 

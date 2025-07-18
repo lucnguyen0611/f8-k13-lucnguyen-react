@@ -9,13 +9,13 @@ import {
     Paper,
     TableContainer
 } from "@mui/material";
-import type {Member} from "../../utils";
+import type {UserClassI} from "../../utils";
 
-interface MemberListProps {
-    members: Member[];
+interface UserListProps {
+    users: UserClassI[];
 }
 
-export default function Members({members}: MemberListProps) {
+export default function Users({users}: UserListProps) {
     return (
         <>
             <Box bgcolor="#f8f9fc" minHeight="100vh" width="100%">
@@ -36,14 +36,14 @@ export default function Members({members}: MemberListProps) {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {members.map((member, index) => (
+                            {users.map((user, index) => (
                                 <TableRow
                                     key={index}
                                     sx={{ backgroundColor: index % 2 === 0 ? "#eef3f9" : "white" }}
                                 >
-                                    <TableCell>{member.id}</TableCell>
-                                    <TableCell>{member.name}</TableCell>
-                                    <TableCell>{member.role}</TableCell>
+                                    <TableCell>{user.id}</TableCell>
+                                    <TableCell>{user.name}</TableCell>
+                                    <TableCell>{user.role}</TableCell>
                                 </TableRow>
                             ))}
                         </TableBody>

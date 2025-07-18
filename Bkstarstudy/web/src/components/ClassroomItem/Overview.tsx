@@ -17,7 +17,6 @@ import {
     Assignment as AssignmentIcon,
     ContentCopy as CopyIcon
 } from '@mui/icons-material';
-// import React from 'react';
 import type {ExamGroupI, ClassI, UserClassI} from '../../utils'
 
 interface OverviewProps {
@@ -32,8 +31,6 @@ export default function Overview({ classroom, examGroup }: OverviewProps) {
     // const handleCopyCode = () => {
     //     navigator.clipboard.writeText(classroom.code);
     // };
-
-    console.log('test', examGroup)
 
     return (
         <Box flex={1} >

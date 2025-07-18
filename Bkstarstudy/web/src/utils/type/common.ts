@@ -1,32 +1,3 @@
-// export interface Course {
-//   id: string;
-//   name: string;
-//   memberCount: number;
-//   classCode: string;
-//   themeColor?: string;
-// }
-//
-// export interface Test {
-//   id: number;
-//   name: string;
-//   date: string;
-//   avatar: string
-// }
-//
-// export interface Member {
-//   id: number;
-//   name: string;
-//   role: string;
-// }
-//
-// export interface Classroom {
-//   id: number;
-//   name: string;
-//   code: string;
-//   members: Member[];
-//   tests: Test[];
-// }
-
 export interface ExamGroupI {
   id: number;
   name: string;
@@ -50,4 +21,33 @@ export interface ClassI {
   code: string;
   name: string;
   users: UserClassI[];
+}
+
+export interface RegisterPayloadI {
+  name: string;
+  email: string;
+  password: string;
+  role: "student" | "teacher" | "admin";
+  status: "pending" | "confirmed";
+}
+
+export interface UserInfoI {
+  id: number;
+  name: string;
+  email: string;
+  role: 'student' | 'teacher' | 'admin';
+}
+
+export interface LoginBodyI {
+  email: string;
+  password: string;
+}
+
+
+export interface DialogProp {
+  isOpen: boolean
+  onClose: () => void
+  onSave: () => void
+  width?: number
+  children?: any
 }
